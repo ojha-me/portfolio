@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -11,6 +12,7 @@ export default function Home() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+    setIsMobileMenuOpen(false); // Close mobile menu after navigation
   };
 
   return (
@@ -53,32 +55,88 @@ export default function Home() {
                 SKILLS
               </button>
             </nav>
-            <div className="w-4 h-4 border border-gray-400 rounded-sm flex items-center justify-center cursor-pointer hover:border-gray-600 transition-colors">
-              <svg
-                className="w-2.5 h-2.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 hover:bg-gray-100 rounded"
+                aria-label="Toggle mobile menu"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  {isMobileMenuOpen ? (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  ) : (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  )}
+                </svg>
+              </button>
             </div>
           </div>
         </div>
       </header>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed top-14 left-0 right-0 bg-white border-b border-gray-200 z-40">
+          <nav className="max-w-5xl mx-auto px-4 py-4">
+            <div className="flex flex-col space-y-4">
+              <button
+                onClick={() => scrollToSection("home")}
+                className={`text-left text-sm font-medium transition-colors hover:text-gray-600 ${
+                  activeSection === "home" ? "text-black" : "text-gray-500"
+                }`}
+              >
+                HOME
+              </button>
+              <button
+                onClick={() => scrollToSection("work")}
+                className={`text-left text-sm font-medium transition-colors hover:text-gray-600 ${
+                  activeSection === "work" ? "text-black" : "text-gray-500"
+                }`}
+              >
+                WORK
+              </button>
+              <button
+                onClick={() => scrollToSection("projects")}
+                className={`text-left text-sm font-medium transition-colors hover:text-gray-600 ${
+                  activeSection === "projects" ? "text-black" : "text-gray-500"
+                }`}
+              >
+                PROJECTS
+              </button>
+              <button
+                onClick={() => scrollToSection("skills")}
+                className={`text-left text-sm font-medium transition-colors hover:text-gray-600 ${
+                  activeSection === "skills" ? "text-black" : "text-gray-500"
+                }`}
+              >
+                SKILLS
+              </button>
+            </div>
+          </nav>
+        </div>
+      )}
 
       <section id="home" className="pt-44 pb-12 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Dinesh Ojha</h1>
             <p className="text-lg text-gray-600 max-w-xl mx-auto">
-              Full Stack Developer & Software Engineer passionate about creating
-              innovative solutions
+              Full Stack Developer who loves creating solutions and exploring new technologies
             </p>
           </div>
         </div>

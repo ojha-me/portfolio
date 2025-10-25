@@ -1,13 +1,14 @@
-export default function BugHuntAI() {
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    adaptiveHeight: true,
-  };
+'use client';
+
+import Image from 'next/image';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+export default function BugHuntAI() {
 
   return (
       <section id="project-detail" className="py-12 px-4 bg-white">
@@ -21,11 +22,57 @@ export default function BugHuntAI() {
       It allows learners to master programming by solving real challenges with an AI tutor guiding them step-by-step.
     </p>
 
-    <div className="grid md:grid-cols-2 gap-6 mb-8">
-      <img src="/learning-path.png" alt="BugHunt AI Screenshot 1" className="rounded-lg shadow" />
-      <img src="/learning-path-creation.png" alt="BugHunt AI Screenshot 3" className="rounded-lg shadow" />
-      <img src="/conversation-ss.png" alt="BugHunt AI Screenshot 2" className="rounded-lg shadow" />
-      <img src="/code-editor-page.png" alt="BugHunt AI Screenshot 4" className="rounded-lg shadow" />
+    <div className="mb-8">
+      <Swiper
+        spaceBetween={20}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+        autoplay={{ delay: 3000 }}
+        loop={true}
+        modules={[Navigation, Pagination, Autoplay]}
+        className="rounded-lg"
+        aria-label="BugHunt AI project screenshots"
+        role="region"
+      >
+        <SwiperSlide>
+          <Image
+            src="/learning-path.png"
+            alt="BugHunt AI Screenshot 1"
+            width={600}
+            height={450}
+            className="w-full rounded-lg shadow max-w-lg mx-auto"
+            priority
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image
+            src="/learning-path-creation.png"
+            alt="BugHunt AI Screenshot 3"
+            width={600}
+            height={450}
+            className="w-full rounded-lg shadow max-w-lg mx-auto"
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image
+            src="/conversation-ss.png"
+            alt="BugHunt AI Screenshot 2"
+            width={600}
+            height={450}
+            className="w-full rounded-lg shadow max-w-lg mx-auto"
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image
+            src="/code-editor-page.png"
+            alt="BugHunt AI Screenshot 4"
+            width={600}
+            height={450}
+            className="w-full rounded-lg shadow max-w-lg mx-auto"
+          />
+        </SwiperSlide>
+      </Swiper>
     </div>
 
     <div className="space-y-6">
