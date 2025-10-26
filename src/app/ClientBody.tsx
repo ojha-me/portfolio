@@ -10,7 +10,8 @@ export default function ClientBody({
   // Remove any extension-added classes during hydration
   useEffect(() => {
     // This runs only on the client after hydration
-    document.body.className = "antialiased";
+    const originalClasses = document.body.className.split(' ').filter(cls => !cls.startsWith('extension-')); // Assuming extensions add classes starting with extension-
+    document.body.className = "antialiased bg-white text-black transform scale-90 origin-top";
   }, []);
 
   return <div className="antialiased">{children}</div>;
