@@ -2,16 +2,32 @@
 'use client';
 
 import Image from 'next/image';
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import Lightbox from 'yet-another-react-lightbox';
+import 'yet-another-react-lightbox/styles.css';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 export default function BugHuntAI() {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const slides = [
+    { src: '/Homepage.png', alt: 'BugHunt AI Homepage' },
+    { src: '/Paths details.png', alt: 'BugHunt AI Paths Details' },
+    { src: '/Paths Creation.png', alt: 'BugHunt AI Paths Creation' },
+    { src: '/Code Editor.png', alt: 'BugHunt AI Code Editor' },
+    { src: '/Notes Page.png', alt: 'BugHunt AI Notes Page' },
+    { src: '/Analytics Page.png', alt: 'BugHunt AI Analytics Page' },
+    { src: '/Register.png', alt: 'BugHunt AI Register Page' },
+  ];
 
   return (
-      <section id="project-detail" className="py-12 px-4 bg-white">
+    <>
+    <section id="project-detail" className="py-12 px-4 bg-white">
   <div className="max-w-5xl mx-auto">
     <h1 className="text-3xl font-bold mb-6 text-center">
       BugHunt AI
@@ -35,44 +51,37 @@ export default function BugHuntAI() {
         aria-label="BugHunt AI project screenshots"
         role="region"
       >
-        <SwiperSlide>
-          <Image
-            src="/learning-path.png"
-            alt="BugHunt AI Screenshot 1"
-            width={600}
-            height={450}
-            className="w-full rounded-lg shadow max-w-lg mx-auto"
-            priority
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src="/learning-path-creation.png"
-            alt="BugHunt AI Screenshot 3"
-            width={600}
-            height={450}
-            className="w-full rounded-lg shadow max-w-lg mx-auto"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src="/conversation-ss.png"
-            alt="BugHunt AI Screenshot 2"
-            width={600}
-            height={450}
-            className="w-full rounded-lg shadow max-w-lg mx-auto"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src="/code-editor-page.png"
-            alt="BugHunt AI Screenshot 4"
-            width={600}
-            height={450}
-            className="w-full rounded-lg shadow max-w-lg mx-auto"
-          />
-        </SwiperSlide>
+        {slides.map((slide, index) => (
+          <SwiperSlide key={index}>
+            <Image
+              src={slide.src}
+              alt={slide.alt}
+              width={600}
+              height={450}
+              className="w-full rounded-lg shadow max-w-lg mx-auto cursor-pointer hover:opacity-90 transition-opacity"
+              priority={index === 0}
+              onClick={() => {
+                setCurrentIndex(index);
+                setLightboxOpen(true);
+              }}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
+    </div>
+
+    {/* Demo Video */}
+    <div className="mb-8">
+      <h2 className="text-2xl font-semibold mb-4">Demo Video</h2>
+      <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+        <iframe
+          className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+          src="https://www.youtube.com/embed/F_ibdM16Ykc"
+          title="BugHunt AI Demo"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
     </div>
 
     <div className="space-y-6">
@@ -120,7 +129,14 @@ export default function BugHuntAI() {
       </a>
     </div>
   </div>
-</section>
 
+  <Lightbox
+    open={lightboxOpen}
+    close={() => setLightboxOpen(false)}
+    slides={slides.map(slide => ({ src: slide.src }))}
+    index={currentIndex}
+  />
+</section>
+    </>
   );
 }
